@@ -104,8 +104,8 @@ section {
 .reads {
     margin-top: 20vh;
     color: #fff;
-    text-align: center;
-    font-size: 1.3em;
+    /* text-align: center; */
+    font-size: 1.1em;
 }
 /*----------------------------------------------
 * Navigation
