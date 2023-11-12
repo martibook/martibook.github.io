@@ -33,7 +33,18 @@
                             Reads
                         </a>
                         <div class="dropdown-menu" aria-labelledby="components">
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads()">A note</a>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('note')">A note</a>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('man_and_superman')">人与超人</a>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('will_china')">中国会走向资本主义道路吗</a>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('the_moon_and_sixpence')">月亮与六便士</a>>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('italy_fairy')">意大利童话</a>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('non_relation')">无缘社会</a>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('tianjin')">天津往事：藏在旧时光里的秘密地图</a>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('food_in_the_world')">人间美食</a>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('jiang_cheng')">江城</a>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('have_to_say')">非说不可</a>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('evaristo_carriego')">埃瓦里斯托 卡列戈</a>
+                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('water_hard')">坚硬如水</a>
                         </div>
                     </li>
 
@@ -107,29 +118,46 @@
                 e.style.display = "none";
             }
 
-            function showReads() {
-
+            function removeReadsChildren() {
                 var e = document.getElementById("reads");
-                if (e.style.display === "block") {
-                    return;
-                }
+                var child = e.lastElementChild;  
+                while (child) { 
+                    e.removeChild(child); 
+                    child = e.lastElementChild; 
+                } 
+            }
+
+            function showReads(name) {
+
+                removeReadsChildren();
 
                 hideBrand();  
+
+                var e = document.getElementById("reads");
                 e.style.display = "block";
 
-                let contents = [
-                    'test content of notes',
-                    'test content of notes'
-                ];
-                for (const text of contents) {
-                    var p = document.createElement('p');
-                    p.textContent = text;
-                    e.appendChild(p);
-                }
+                // test locally
+                // let contents = [
+                //     'xxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+                //     'mmmmmmmmm',
+                //     'nnnnnnnnnnnnnnnnnnnnnnnn'
+                // ]
+                // for (const text of contents) {
+                //     var p = document.createElement('p');
+                //     p.textContent = text;
+                //     e.appendChild(p);
+                // }
 
-                // fetch('./reads/Button.txt')
-                //     .then((response) => console.log("file content read:"));
-
+                fetch(`./reads/${name}.txt`)
+                    .then((response) => response.text())
+                    .then((text) => {
+                        const contents = text.split('\n');
+                        for (const text of contents) {
+                            var p = document.createElement('p');
+                            p.textContent = text;
+                            e.appendChild(p);
+                        }
+                    });
             }
         </script>
     </body>
