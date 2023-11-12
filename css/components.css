@@ -230,6 +230,42 @@ section {
 .btn+.dropdown-toggle-split {
     padding-right: 1.5rem;
 }
+
+.dropdown-menu {
+    height: 60vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+/* Define the scrollbar style */
+.dropdown-menu::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  /* Define the thumb style */
+  .dropdown-menu::-webkit-scrollbar-thumb {
+    background: transparent;
+    /* background: linear-gradient(to bottom right, #4d7fff 0%, #1a56ff 100%); */
+    /* border-radius: 5px; */
+  }
+  
+  /* Define the track style */
+  .dropdown-menu::-webkit-scrollbar-track {
+    /* background-color: #ddd; */
+    background-color: transparent;
+    /* border: 1px solid #ccc; */
+  }
+  
+  /* Define the button style */
+  .dropdown-menu::-webkit-scrollbar-button {
+    background-color: transparent;
+    /* border-radius: 5px; */
+  }
+  
+  /* Define the button style when being hovered over */
+  .dropdown-menu::-webkit-scrollbar-button:hover {
+    background-color: transparent;
+  }
 /*----------------------------------------------
 * Form Elements
 ----------------------------------------------*/
