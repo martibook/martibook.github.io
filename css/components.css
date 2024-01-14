@@ -106,14 +106,18 @@ section {
     color: #fff;
     /* text-align: center; */
     font-size: 1.1em;
-    overflow-x: hidden;
     height: 60vh;
+    overflow-x: auto;
     overflow-y: auto;
     text-align:justify;
 }
 
-/* Define the scrollbar style */
-.reads::-webkit-scrollbar {
+#reads pre {
+    color: #ddd;
+}
+
+  /* Define the scrollbar style */
+  .reads::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
