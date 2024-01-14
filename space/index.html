@@ -148,6 +148,31 @@
                 e.style.display = "block";
 
                 // test locally
+                // let text = 
+                //     'xxxxxxxxxxxxxxxxxxxxxxxxxxxx\nmmmmmmmmm\n\n一些中文';
+                // var p = document.createElement('pre');
+                // p.textContent = text;
+                // e.appendChild(p);
+
+                fetch(`./reads/${name}.txt`)
+                    .then((response) => response.text())
+                    .then((text) => {
+                        var p = document.createElement('pre');
+                        p.textContent = text;
+                        e.appendChild(p);
+                    });
+            }
+
+            function showReadsEachLine(name) {
+
+                removeReadsChildren();
+
+                hideBrand();  
+
+                var e = document.getElementById("reads");
+                e.style.display = "block";
+
+                // test locally
                 // let contents = [
                 //     'xxxxxxxxxxxxxxxxxxxxxxxxxxxx',
                 //     'mmmmmmmmm',
