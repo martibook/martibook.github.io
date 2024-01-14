@@ -148,11 +148,15 @@
                 e.style.display = "block";
 
                 // test locally
-                // let text = 
-                //     'mmmmmmmmm\n\n一些中文\n\nxxxxxxxxxxxxxxxxxxxxxxxxxxxx- some pretty long text on a line xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
-                // var p = document.createElement('pre');
-                // p.textContent = text;
-                // e.appendChild(p);
+//                 let text = 
+//                     `
+// 一些中文
+
+// pretty long line xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxx
+// `;
+//                 var p = document.createElement('pre');
+//                 p.textContent = text;
+//                 e.appendChild(p);
 
                 fetch(`./reads/${name}.txt`)
                     .then((response) => response.text())
