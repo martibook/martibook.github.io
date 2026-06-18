@@ -1,8 +1,10 @@
-人与超人
-man & superman
-
-萧伯纳
-
+---
+slug: man_and_superman
+order: 2
+title: "人与超人"
+subtitle: "man & superman"
+author: "萧伯纳"
+---
 
 人皆有一死或不幸
 

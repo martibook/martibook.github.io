@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -24,20 +26,10 @@
                             Reads
                         </a>
                         <div class="dropdown-menu" aria-labelledby="nav-reads">
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('capital_market_cn_volume_6')">中国资本市场的理论逻辑卷六</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('man_and_superman')">人与超人</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('will_china')">中国会走向资本主义道路吗</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('the_moon_and_sixpence')">月亮与六便士</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('italy_fairy')">意大利童话</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('non_relation')">无缘社会</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('tianjin')">天津往事：藏在旧时光里的秘密地图</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('food_in_the_world')">人间美食</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('jiang_cheng')">江城</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('have_to_say')">非说不可</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('evaristo_carriego')">埃瓦里斯托 卡列戈</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('water_hard')">坚硬如水</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('the_gay_science')">快乐的科学</a>
-                            <a class="dropdown-item page-scroll" href="#" onclick="showReads('distant_journey')">遥远的公路</a>
+                            {% assign reads = site.reads | sort: "order" %}
+                            {% for read in reads %}
+                            <a class="dropdown-item" href="#read-{{ read.slug }}" onclick="showReads('{{ read.slug }}'); return false;">{{ read.title }}</a>
+                            {% endfor %}
                         </div>
                     </li>
 
@@ -72,8 +64,15 @@
                                     Recent Activity
                                 </a>
                             </div>
-                            <div id="reads" class="reads" style="display: none;"> 
-                                <!-- to be filled by js -->
+                            <div id="reads" class="reads" style="display: none;">
+                                {% for read in reads %}
+                                <article id="read-{{ read.slug }}" class="read-entry" style="display: none;">
+                                    <h2 class="read-title">{{ read.title }}</h2>
+                                    {% if read.subtitle %}<p class="read-subtitle">{{ read.subtitle }}</p>{% endif %}
+                                    {% if read.author %}<p class="read-author">{{ read.author }}</p>{% endif %}
+                                    <div class="read-body">{{ read.content | markdownify }}</div>
+                                </article>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -98,80 +97,13 @@
         <!--Bootstrap 5 bundle (Popper included; no jQuery needed)-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
         <script>
-            function hideBrand() {
-                var e = document.getElementById("brand");
-                e.style.display = "none";
-            }
-
-            function removeReadsChildren() {
-                var e = document.getElementById("reads");
-                var child = e.lastElementChild;  
-                while (child) { 
-                    e.removeChild(child); 
-                    child = e.lastElementChild; 
-                } 
-            }
-
-            function showReads(name) {
-
-                removeReadsChildren();
-
-                hideBrand();  
-
-                var e = document.getElementById("reads");
-                e.style.display = "block";
-
-                // test locally
-//                 let text = 
-//                     `
-// 一些中文
-
-// pretty long line xxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx xxxxxxxxxxxxxx xxxxxxxxxxxxxx
-// `;
-//                 var p = document.createElement('pre');
-//                 p.textContent = text;
-//                 e.appendChild(p);
-
-                fetch(`./reads/${name}.txt`)
-                    .then((response) => response.text())
-                    .then((text) => {
-                        var p = document.createElement('pre');
-                        p.textContent = text;
-                        e.appendChild(p);
-                    });
-            }
-
-            function showReadsEachLine(name) {
-
-                removeReadsChildren();
-
-                hideBrand();  
-
-                var e = document.getElementById("reads");
-                e.style.display = "block";
-
-                // test locally
-                // let contents = [
-                //     'xxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-                //     'mmmmmmmmm',
-                //     'nnnnnnnnnnnnnnnnnnnnnnnn'
-                // ]
-                // for (const text of contents) {
-                //     var p = document.createElement('p');
-                //     p.textContent = text;
-                //     e.appendChild(p);
-                // }
-
-                fetch(`./reads/${name}.txt`)
-                    .then((response) => response.text())
-                    .then((text) => {
-                        const contents = text.split('\n');
-                        for (const text of contents) {
-                            var p = document.createElement('p');
-                            p.textContent = text;
-                            e.appendChild(p);
-                        }
-                    });
+            function showReads(slug) {
+                document.getElementById("brand").style.display = "none";
+                document.querySelectorAll(".read-entry").forEach(function (el) {
+                    el.style.display = "none";
+                });
+                document.getElementById("reads").style.display = "block";
+                document.getElementById("read-" + slug).style.display = "block";
             }
         </script>
     </body>
