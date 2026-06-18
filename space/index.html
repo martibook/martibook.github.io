@@ -5,10 +5,10 @@
         <title>Marti</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
-        <!--Bootstrap 4-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <!--Bootstrap 5-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" crossorigin="anonymous">
         <!--icons-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/all.min.css">
         <!--custom css-->
         <link rel="stylesheet" href="../css/components.css" />
         <link rel="stylesheet" href="../css/colors.css" />
@@ -16,15 +16,11 @@
     <body>
 
         <!--header-->
-        <nav class="navbar navbar-toggleable-md fixed-top navbar-transparent sticky-navigation-alt">
-            <!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="ion-grid"></span>
-            </button> -->
-
+        <nav class="navbar navbar-expand fixed-top navbar-transparent">
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="nav-reads" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="nav-reads" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Reads
                         </a>
                         <div class="dropdown-menu" aria-labelledby="nav-reads">
@@ -54,10 +50,10 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tooltip" data-placement="bottom" data-title="instagram" target="_blank" href="https://www.instagram.com/martibook"><em class="fa fa-instagram"></em></a>
+                        <a class="nav-link" title="instagram" target="_blank" href="https://www.instagram.com/martibook"><em class="fa-brands fa-instagram"></em></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tooltip" data-placement="bottom" data-title="github" target="_blank" href="https://github.com/martibook"><em class="fa fa-github"></em></a>
+                        <a class="nav-link" title="github" target="_blank" href="https://github.com/martibook"><em class="fa-brands fa-github"></em></a>
                     </li>
                 </ul>
             </div>
@@ -85,7 +81,7 @@
             </section>
 
             <!--footer-->
-            <section class="colored-section bg-inverse">
+            <section class="colored-section bg-dark">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-8 offset-md-2 text-center">
@@ -99,10 +95,8 @@
             </section>
         </div>
 
-        <!--Bootstrap dropdown deps (jQuery + Tether required by Bootstrap 4 alpha JS)-->
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+        <!--Bootstrap 5 bundle (Popper included; no jQuery needed)-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             function hideBrand() {
                 var e = document.getElementById("brand");
