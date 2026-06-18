@@ -1,0 +1,21 @@
+title: Marti
+
+# Reading notes live in _reads/*.md as a Jekyll collection.
+# output: false -> no standalone pages; the Space page renders them inline.
+collections:
+  reads:
+    output: false
+
+markdown: kramdown
+kramdown:
+  # GFM input + hard_wrap so the single line breaks in the reading notes
+  # (poetry/aphorisms) are preserved as <br>, matching GitHub-style rendering.
+  input: GFM
+  hard_wrap: true
+
+# These are only needed for local tooling and never served.
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor

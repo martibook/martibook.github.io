@@ -1,0 +1,9 @@
+---
+slug: the_moon_and_sixpence
+order: 4
+title: "月亮与六便士"
+---
+
+Art is an expression of emotion that every one seems to be able to understand.
+
+We treasure the power we have over people by their regard for our opinion of them, and we hate those upon whom we have no such influence.

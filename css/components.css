@@ -116,6 +116,33 @@ section {
     color: #ddd;
 }
 
+.read-title {
+    font-size: 1.7em;
+    font-weight: 700;
+    margin-bottom: .15em;
+}
+.read-subtitle {
+    font-style: italic;
+    opacity: .8;
+    margin-bottom: .1em;
+}
+.read-author {
+    opacity: .7;
+    margin-bottom: 1.4em;
+}
+.read-body h3 {
+    font-size: 1.15em;
+    font-weight: 600;
+    margin: 1.4em 0 .5em;
+}
+.read-body p {
+    color: #ddd;
+    margin-bottom: 1em;
+}
+.read-body p:last-child {
+    margin-bottom: 0;
+}
+
   /* Define the scrollbar style */
   ::-webkit-scrollbar {
     width: 10px;
