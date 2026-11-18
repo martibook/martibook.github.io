@@ -4,12 +4,12 @@ name: Build CV PDF
 # This workflow prints that page to cv/cv_LUjiyan.pdf with headless Chrome.
 # - On a pull request: builds the PDF and uploads it as an artifact, so you
 #   can download and check it before merging.
-# - On push to main: builds the PDF and commits it, so the site's CV link
+# - On push to marti (the default branch): builds the PDF and commits it, so the site's CV link
 #   always serves the latest version.
 
 on:
   push:
-    branches: [main]
+    branches: [marti]
     paths: ["cv/index.md", "_layouts/cv.html", "css/cv.css", ".github/workflows/build-cv.yml"]
   pull_request:
     paths: ["cv/index.md", "_layouts/cv.html", "css/cv.css", ".github/workflows/build-cv.yml"]

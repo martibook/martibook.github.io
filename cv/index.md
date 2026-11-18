@@ -13,7 +13,7 @@ HOW TO EDIT
 - "### Title | Date" starts an entry. The text after the last " | " is shown on the right.
 - A plain line right under "###" is a sub-line (e.g. the company name).
 - "- text" is a bullet point. **bold**, *italic*.
-When you merge your change to main, the PDF is rebuilt automatically.
+When you merge your change, the PDF is rebuilt automatically.
 -->
 
 ## Experience
