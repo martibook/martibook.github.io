@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap">
+    <link rel="stylesheet" href="../css/cv.css" />
+</head>
+<body>
+    <nav class="toolbar">
+        <a href="../">← Home</a>
+        <a href="{{ page.pdf }}" class="button">Download PDF</a>
+    </nav>
+    <main class="paper">
+        <header>
+            <h1>{{ page.full_name }}</h1>
+            <p class="contact">
+                <a href="mailto:{{ page.email }}">{{ page.email }}</a>
+                <span class="sep">|</span>
+                <a href="https://{{ page.website }}">{{ page.website }}</a>
+            </p>
+        </header>
+{%- comment -%}
+  Turn "### Title | Date" into a title on the left and a date on the right.
+  The text after the last " | " in each h3 becomes the date.
+{%- endcomment -%}
+{%- assign parts = content | split: "<h3" -%}
+{{ parts[0] }}
+{%- for part in parts offset: 1 -%}
+  {%- assign halves = part | split: "</h3>" -%}
+  {%- assign segs = halves[0] | split: " | " -%}
+  {%- if segs.size > 1 -%}
+    {%- assign date = segs.last -%}
+    {%- assign title = segs | pop | join: " | " -%}
+    {%- assign attrs = title | split: ">" | first -%}
+    {%- assign text = title | remove_first: attrs | remove_first: ">" -%}
+<h3{{ attrs }}><span class="title">{{ text }}</span> <span class="date">{{ date }}</span></h3>{{ halves[1] }}
+  {%- else -%}
+<h3{{ part }}
+  {%- endif -%}
+{%- endfor %}
+    </main>
+</body>
+</html>

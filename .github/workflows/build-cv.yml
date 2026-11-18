@@ -1,0 +1,70 @@
+name: Build CV PDF
+
+# The CV is written in cv/index.md and shown on the site at /cv/.
+# This workflow prints that page to cv/cv_LUjiyan.pdf with headless Chrome.
+# - On a pull request: builds the PDF and uploads it as an artifact, so you
+#   can download and check it before merging.
+# - On push to marti (the default branch): builds the PDF and commits it, so the site's CV link
+#   always serves the latest version.
+
+on:
+  push:
+    branches: [marti]
+    paths: ["cv/index.md", "_layouts/cv.html", "css/cv.css", ".github/workflows/build-cv.yml"]
+  pull_request:
+    paths: ["cv/index.md", "_layouts/cv.html", "css/cv.css", ".github/workflows/build-cv.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-cv-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  OUTPUT_PDF: cv/cv_LUjiyan.pdf
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Same Jekyll build that GitHub Pages uses.
+      - name: Build site
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Print CV page to PDF
+        run: |
+          python3 -m http.server 8000 --directory _site >/dev/null 2>&1 &
+          sleep 2
+          google-chrome --headless --no-sandbox --disable-gpu \
+            --no-pdf-header-footer \
+            --run-all-compositor-stages-before-draw \
+            --virtual-time-budget=15000 \
+            --print-to-pdf="$OUTPUT_PDF" \
+            http://localhost:8000/cv/
+          test -s "$OUTPUT_PDF"
+
+      - name: Upload PDF preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: ${{ env.OUTPUT_PDF }}
+
+      - name: Commit PDF
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$OUTPUT_PDF"
+          if git diff --cached --quiet; then
+            echo "PDF unchanged."
+          else
+            git commit -m "Build CV PDF from cv/index.md"
+            git push
+          fi
