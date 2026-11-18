@@ -1,0 +1,6 @@
+# Used only by the "Build CV PDF" GitHub Action, never by GitHub Pages.
+# It renders _cv/cv.md to a temporary page so the Action can print it to PDF.
+collections:
+  cv:
+    output: true
+    permalink: /cv-render/

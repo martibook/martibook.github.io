@@ -1,18 +1,18 @@
 name: Build CV PDF
 
-# The CV is written in cv/index.md and shown on the site at /cv/.
-# This workflow prints that page to cv/cv_LUjiyan.pdf with headless Chrome.
+# The CV is written in _cv/cv.md. This workflow renders it to a temporary
+# web page (never published) and prints that page to cv/cv_LUjiyan.pdf
+# with headless Chrome.
 # - On a pull request: builds the PDF and uploads it as an artifact, so you
 #   can download and check it before merging.
-# - On push to marti (the default branch): builds the PDF and commits it, so the site's CV link
-#   always serves the latest version.
+# - On push to marti (the default branch): builds the PDF and commits it.
 
 on:
   push:
     branches: [marti]
-    paths: ["cv/index.md", "_layouts/cv.html", "css/cv.css", ".github/workflows/build-cv.yml"]
+    paths: ["_cv/**", "_layouts/cv.html", "_config.cv.yml", ".github/workflows/build-cv.yml"]
   pull_request:
-    paths: ["cv/index.md", "_layouts/cv.html", "css/cv.css", ".github/workflows/build-cv.yml"]
+    paths: ["_cv/**", "_layouts/cv.html", "_config.cv.yml", ".github/workflows/build-cv.yml"]
   workflow_dispatch:
 
 permissions:
@@ -31,23 +31,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Same Jekyll build that GitHub Pages uses.
-      - name: Build site
-        uses: actions/jekyll-build-pages@v1
+      - uses: ruby/setup-ruby@v1
         with:
-          source: ./
-          destination: ./_site
+          ruby-version: "3.3"
+
+      - name: Render CV page
+        run: |
+          gem install --no-document jekyll kramdown-parser-gfm
+          jekyll build --config _config.yml,_config.cv.yml -d /tmp/cv-site
 
       - name: Print CV page to PDF
         run: |
-          python3 -m http.server 8000 --directory _site >/dev/null 2>&1 &
+          python3 -m http.server 8000 --directory /tmp/cv-site >/dev/null 2>&1 &
           sleep 2
           google-chrome --headless --no-sandbox --disable-gpu \
             --no-pdf-header-footer \
             --run-all-compositor-stages-before-draw \
             --virtual-time-budget=15000 \
             --print-to-pdf="$OUTPUT_PDF" \
-            http://localhost:8000/cv/
+            http://localhost:8000/cv-render/
           test -s "$OUTPUT_PDF"
 
       - name: Upload PDF preview
@@ -65,6 +67,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "PDF unchanged."
           else
-            git commit -m "Build CV PDF from cv/index.md"
+            git commit -m "Build CV PDF from _cv/cv.md"
             git push
           fi
