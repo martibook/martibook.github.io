@@ -2,7 +2,6 @@
 slug: notes_to_myself
 order: 1
 title: "写给自己"
-subtitle: "2017 – 2026"
 ---
 
 **2017.02.15**
