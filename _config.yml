@@ -1,14 +1,17 @@
 title: Marti
 
-# Reading notes live in _reads/*.md as a Jekyll collection.
+# Reading notes live in _reads/*.md and my own writing in _writes/*.md,
+# as Jekyll collections.
 # output: false -> no standalone pages; the Space page renders them inline.
 collections:
   reads:
     output: false
+  writes:
+    output: false
 
 markdown: kramdown
 kramdown:
-  # GFM input + hard_wrap so the single line breaks in the reading notes
+  # GFM input + hard_wrap so the single line breaks in the reads and writes
   # (poetry/aphorisms) are preserved as <br>, matching GitHub-style rendering.
   input: GFM
   hard_wrap: true
