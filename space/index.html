@@ -89,7 +89,6 @@
                                 <article id="write-{{ write.slug }}" class="read-entry" style="display: none;">
                                     <h2 class="read-title">{{ write.title }}</h2>
                                     {% if write.subtitle %}<p class="read-subtitle">{{ write.subtitle }}</p>{% endif %}
-                                    {% if write.date %}<p class="read-author">{{ write.date | date: "%Y-%m-%d" }}</p>{% endif %}
                                     <div class="read-body">{{ write.content | markdownify }}</div>
                                 </article>
                                 {% endfor %}
