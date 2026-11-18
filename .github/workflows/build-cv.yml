@@ -22,7 +22,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MAIN_TEX: main.tex          # entry file inside cv/src/
+  MAIN_TEX: resume.tex         # entry file inside cv/src/
   OUTPUT_PDF: cv/cv_LUjiyan.pdf
 
 jobs:
