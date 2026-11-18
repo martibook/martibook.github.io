@@ -200,6 +200,12 @@ section {
 .navbar-nav .nav-link em, .navbar-nav .nav-link i{
     font-size: 18px;
 }
+.navbar-nav .nav-link .icon{
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    vertical-align: -0.125em;
+}
 .navbar.navbar-transparent {
     background-color: transparent;
     box-shadow: none;
