@@ -4,7 +4,6 @@ title: LU jiyan – CV
 full_name: LU jiyan
 email: martinahill@outlook.com
 website: martibook.github.io
-pdf: cv_LUjiyan.pdf
 ---
 
 <!--

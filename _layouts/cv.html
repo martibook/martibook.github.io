@@ -3,27 +3,57 @@
 <head>
     <meta charset="utf-8">
     <title>{{ page.title }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap">
-    <link rel="stylesheet" href="../css/cv.css" />
+    <style>
+        @page { size: letter; margin: 0.5in 0.55in; }
+        body {
+            margin: 0;
+            color: #1a1a1a;
+            font-family: "Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+            font-size: 10pt;
+            line-height: 1.32;
+        }
+        a { color: inherit; text-decoration: none; }
+        header { text-align: right; margin-bottom: 8px; }
+        h1 { margin: 0; font-size: 2em; font-weight: 400; letter-spacing: .01em; }
+        .contact { margin: 2px 0 0; font-size: .85em; font-weight: 600; }
+        .contact .sep { color: #666; margin: 0 .6em; font-weight: 400; }
+        h2 {
+            margin: 20px 0 6px;
+            padding-bottom: 2px;
+            border-bottom: 1.5px solid #1a1a1a;
+            font-size: 1.25em;
+            font-weight: 700;
+            break-after: avoid;
+        }
+        h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 16px;
+            margin: 8px 0 0;
+            font-size: 1em;
+            font-weight: 700;
+            break-after: avoid;
+            break-inside: avoid;
+        }
+        h3 em { font-weight: 400; }
+        h3 .date { flex-shrink: 0; font-size: .85em; font-weight: 400; font-style: italic; color: #666; }
+        h3 + p { margin: 0; font-size: .9em; color: #666; break-after: avoid; }
+        p { margin: 6px 0; }
+        ul { margin: 2px 0 0; padding-left: 1.2em; }
+        li { margin: 1px 0; break-inside: avoid; }
+    </style>
 </head>
 <body>
-    <nav class="toolbar">
-        <a href="../">← Home</a>
-        <a href="{{ page.pdf }}" class="button">Download PDF</a>
-    </nav>
-    <main class="paper">
-        <header>
-            <h1>{{ page.full_name }}</h1>
-            <p class="contact">
-                <a href="mailto:{{ page.email }}">{{ page.email }}</a>
-                <span class="sep">|</span>
-                <a href="https://{{ page.website }}">{{ page.website }}</a>
-            </p>
-        </header>
+    <header>
+        <h1>{{ page.full_name }}</h1>
+        <p class="contact">
+            <a href="mailto:{{ page.email }}">{{ page.email }}</a>
+            <span class="sep">|</span>
+            <a href="https://{{ page.website }}">{{ page.website }}</a>
+        </p>
+    </header>
 {%- comment -%}
   Turn "### Title | Date" into a title on the left and a date on the right.
   The text after the last " | " in each h3 becomes the date.
@@ -43,6 +73,5 @@
 <h3{{ part }}
   {%- endif -%}
 {%- endfor %}
-    </main>
 </body>
 </html>
