@@ -1,0 +1,61 @@
+name: Build CV
+
+# Edit the LaTeX source in cv/src/, and this workflow builds the PDF.
+# - On a pull request: it checks that the CV compiles and uploads the PDF
+#   as a downloadable artifact, so you can preview it before merging.
+# - On push to main: it builds the PDF and commits it to cv/cv_LUjiyan.pdf,
+#   which is the file the website links to.
+
+on:
+  push:
+    branches: [main]
+    paths: ["cv/src/**", ".github/workflows/build-cv.yml"]
+  pull_request:
+    paths: ["cv/src/**", ".github/workflows/build-cv.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-cv-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  MAIN_TEX: main.tex          # entry file inside cv/src/
+  OUTPUT_PDF: cv/cv_LUjiyan.pdf
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: ${{ env.MAIN_TEX }}
+          working_directory: cv/src
+          latexmk_use_xelatex: true
+
+      - name: Move PDF into place
+        run: cp "cv/src/${MAIN_TEX%.tex}.pdf" "$OUTPUT_PDF"
+
+      - name: Upload PDF preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: ${{ env.OUTPUT_PDF }}
+
+      - name: Commit PDF
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$OUTPUT_PDF"
+          if git diff --cached --quiet; then
+            echo "PDF unchanged."
+          else
+            git commit -m "Build CV PDF from LaTeX source"
+            git push
+          fi
