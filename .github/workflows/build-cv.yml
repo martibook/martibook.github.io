@@ -1,17 +1,18 @@
-name: Build CV
+name: Build CV PDF
 
-# Edit the LaTeX source in cv/src/, and this workflow builds the PDF.
-# - On a pull request: it checks that the CV compiles and uploads the PDF
-#   as a downloadable artifact, so you can preview it before merging.
-# - On push to main: it builds the PDF and commits it to cv/cv_LUjiyan.pdf,
-#   which is the file the website links to.
+# The CV is written in cv/index.md and shown on the site at /cv/.
+# This workflow prints that page to cv/cv_LUjiyan.pdf with headless Chrome.
+# - On a pull request: builds the PDF and uploads it as an artifact, so you
+#   can download and check it before merging.
+# - On push to main: builds the PDF and commits it, so the site's CV link
+#   always serves the latest version.
 
 on:
   push:
     branches: [main]
-    paths: ["cv/src/**", ".github/workflows/build-cv.yml"]
+    paths: ["cv/index.md", "_layouts/cv.html", "css/cv.css", ".github/workflows/build-cv.yml"]
   pull_request:
-    paths: ["cv/src/**", ".github/workflows/build-cv.yml"]
+    paths: ["cv/index.md", "_layouts/cv.html", "css/cv.css", ".github/workflows/build-cv.yml"]
   workflow_dispatch:
 
 permissions:
@@ -22,7 +23,6 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MAIN_TEX: resume.tex         # entry file inside cv/src/
   OUTPUT_PDF: cv/cv_LUjiyan.pdf
 
 jobs:
@@ -31,15 +31,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Compile LaTeX
-        uses: xu-cheng/latex-action@v3
+      # Same Jekyll build that GitHub Pages uses.
+      - name: Build site
+        uses: actions/jekyll-build-pages@v1
         with:
-          root_file: ${{ env.MAIN_TEX }}
-          working_directory: cv/src
-          latexmk_use_xelatex: true
+          source: ./
+          destination: ./_site
 
-      - name: Move PDF into place
-        run: cp "cv/src/${MAIN_TEX%.tex}.pdf" "$OUTPUT_PDF"
+      - name: Print CV page to PDF
+        run: |
+          python3 -m http.server 8000 --directory _site >/dev/null 2>&1 &
+          sleep 2
+          google-chrome --headless --no-sandbox --disable-gpu \
+            --no-pdf-header-footer \
+            --run-all-compositor-stages-before-draw \
+            --virtual-time-budget=15000 \
+            --print-to-pdf="$OUTPUT_PDF" \
+            http://localhost:8000/cv/
+          test -s "$OUTPUT_PDF"
 
       - name: Upload PDF preview
         uses: actions/upload-artifact@v4
@@ -56,6 +65,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "PDF unchanged."
           else
-            git commit -m "Build CV PDF from LaTeX source"
+            git commit -m "Build CV PDF from cv/index.md"
             git push
           fi

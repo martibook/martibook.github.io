@@ -45,11 +45,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
-*.aux
-*.log
-*.out
-*.fls
-*.fdb_latexmk
-*.xdv
-*.synctex.gz
-cv/src/*.pdf
+
+# Local Jekyll build output
+_site/
+.jekyll-cache/
